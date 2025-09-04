@@ -27,6 +27,17 @@ io.on('connection', (socket) => {
     logger.info({ id: socket.id }, 'Socket connected');
     socket.on('disconnect', () => logger.info({ id: socket.id }, 'Socket disconnected'));
 });
+// Root route
+app.get('/', (_req, res) => {
+    res.json({
+        message: 'WhatsApp API Server',
+        status: 'running',
+        endpoints: {
+            health: '/health',
+            api: '/api/wa'
+        }
+    });
+});
 app.get('/health', (_req, res) => res.json({ ok: true }));
 app.use('/api/wa', wa_1.default);
 const PORT = process.env.PORT ? Number(process.env.PORT) : 4000;
