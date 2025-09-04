@@ -19,6 +19,7 @@ exports.logger = logger;
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json({ limit: '2mb' }));
+app.use(express_1.default.static('public'));
 const server = http_1.default.createServer(app);
 const io = new socket_io_1.Server(server, { cors: { origin: '*' } });
 exports.io = io;

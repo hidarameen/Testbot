@@ -14,6 +14,7 @@ const logger = pino({}, stream);
 const app = express();
 app.use(cors());
 app.use(express.json({ limit: '2mb' }));
+app.use(express.static('public'));
 
 const server = http.createServer(app);
 const io = new SocketIOServer(server, { cors: { origin: '*' } });
