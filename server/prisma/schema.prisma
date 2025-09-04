@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  sessions     WASession[]
+  rules        ForwardingRule[]
+}
+
+model WASession {
+  id              String   @id @default(cuid())
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  label           String
+  status          String   @default("disconnected")
+  authStateJson   String   // serialized Baileys auth state
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  rules           ForwardingRule[]
+}
+
+model ForwardingRule {
+  id             String    @id @default(cuid())
+  userId         String
+  user           User      @relation(fields: [userId], references: [id])
+  waSessionId    String
+  waSession      WASession @relation(fields: [waSessionId], references: [id])
+  telegramSource String    // channel/group/user ID
+  whatsappTarget String    // chat JID or group JID
+  filterJson     String    // optional filters (keywords, media types)
+  isEnabled      Boolean   @default(true)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
