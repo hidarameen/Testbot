@@ -1,0 +1,1 @@
+web: bash -lc "cd server && npm ci --no-audit --no-fund && npx prisma generate && npm run build && npx prisma migrate deploy && npm start"

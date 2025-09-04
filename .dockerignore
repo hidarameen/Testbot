@@ -1,0 +1,31 @@
+# Node and package managers
+**/node_modules
+**/npm-debug.log*
+**/yarn-error.log*
+**/pnpm-debug.log
+**/.pnpm-store
+
+# Git
+.git
+.gitignore
+
+# Env files
+**/.env
+**/.env.*
+
+# Build outputs and caches
+**/dist
+**/.turbo
+**/.next
+**/.cache
+
+# OS
+.DS_Store
+
+# Prisma local DBs
+server/prisma/*.db*
+server/prisma/*.sqlite*
+server/prisma/dev.db*
+
+# Generated client (built inside container)
+server/src/generated
